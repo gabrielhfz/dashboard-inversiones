@@ -1,8 +1,6 @@
 <!DOCTYPE html>
 <html lang="es">
-<head>
-<meta charset="UTF-8">
-<meta name="viewport" content="width=device-width,initial-scale=1,maximum-scale=1,user-scalable=no">
+<head><meta charset="UTF-8"><meta name="viewport" content="width=device-width,initial-scale=1,maximum-scale=1,user-scalable=no">
 <title>Dashboard Inversiones Argentina</title>
 <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;600;700;800&display=swap" rel="stylesheet">
 <style>
@@ -12,178 +10,974 @@ body{font-family:'Inter',system-ui,-apple-system,sans-serif;background:#f1f5f9;c
 .hd h1{font-size:20px;font-weight:800}
 .hd .ts{font-size:11px;opacity:.85;margin-top:6px;background:rgba(255,255,255,.12);display:inline-block;padding:3px 12px;border-radius:20px}
 .hd .info{font-size:10px;opacity:.65;margin-top:3px}
-.hd .err{font-size:10px;color:#fca5a5;margin-top:2px}
-.tabs{display:flex;overflow-x:auto;-webkit-overflow-scrolling:touch;padding:0 4px;background:#f1f5f9;position:sticky;top:0;z-index:99;gap:2px}
+
+.tabs{display:flex;overflow-x:auto;-webkit-overflow-scrolling:touch;padding:0 4px;background:#f1f5f9;position:sticky;top:0;z-index:99}
 .tabs::-webkit-scrollbar{display:none}
-.tb{flex:1 0 auto;padding:10px 14px;border-radius:8px 8px 0 0;cursor:pointer;font-weight:700;font-size:12px;color:#64748b;background:#e2e8f0;border:none;white-space:nowrap;transition:background .15s}
+.tb{flex:1 0 auto;margin:2px 1px;padding:10px 14px;border-radius:8px 8px 0 0;cursor:pointer;font-weight:700;font-size:12px;color:#64748b;background:#e2e8f0;border:none;white-space:nowrap;transition:background .15s}
 .tb.on{background:#fff;color:#0f172a}
-.tc{display:none;padding-bottom:8px}.tc.on{display:block}
-.w{padding:8px}
+.tc{display:none}.tc.on{display:block}
+
+.w{padding:8px;-webkit-overflow-scrolling:touch}
 table{width:100%;border-collapse:collapse;background:#fff;border-radius:12px;overflow:hidden;box-shadow:0 2px 8px rgba(0,0,0,.06)}
-th{background:#0f172a;color:#fff;padding:8px 6px;font-size:9px;font-weight:700;text-transform:uppercase;text-align:left;position:sticky;top:0;z-index:1;white-space:nowrap;letter-spacing:.3px}
+th{background:#0f172a;color:#fff;padding:8px 6px;font-size:9px;font-weight:700;text-transform:uppercase;text-align:left;position:sticky;top:0;white-space:nowrap;letter-spacing:.3px}
 td{border-bottom:1px solid #f1f5f9;padding:8px 6px;font-size:12px;vertical-align:middle}
 tbody tr:hover{background:#f8fafc}
-.nw{font-weight:700;display:block}.bk{color:#64748b;font-size:9px;display:block;margin-top:1px}
+tbody td:last-child{border-bottom:none}
+
+.nw{font-weight:700;display:block}
+.bk{color:#64748b;font-size:9px;display:block;margin-top:1px}
 .g{color:#10b981;font-weight:800;font-size:13px;white-space:nowrap}
 .b{color:#3b82f6;font-weight:800;font-size:13px;white-space:nowrap}
-.t{color:#64748b;font-size:10px}.x{color:#475569;font-size:10px}
+.t{color:#64748b;font-size:10px}
+.x{color:#475569;font-size:10px}
 .bg{display:inline-block;font-size:8px;padding:2px 6px;border-radius:4px;font-weight:600;white-space:nowrap}
-.bg.bi{background:#dcfce7;color:#15803d}.bg.bm{background:#dbeafe;color:#1d4ed8}.bg.by{background:#fef9c3;color:#854d0e}
+.bg.bi{background:#dcfce7;color:#15803d}
+.bg.bm{background:#dbeafe;color:#1d4ed8}
+.bg.by{background:#fef9c3;color:#854d0e}
 .sc{font-size:9px;color:#94a3b8;text-align:center;min-width:70px}
 a.sc{color:#3b82f6;text-decoration:none;font-weight:600}
 .upd{font-size:9px;color:#475569;white-space:nowrap;font-weight:500}
 .cond{color:#92400e;font-size:8px;font-style:italic;display:block;margin-top:1px;max-width:160px;overflow:hidden;text-overflow:ellipsis}
-.empty{text-align:center;padding:30px;color:#94a3b8}
-.spin{display:inline-block;width:20px;height:20px;border:3px solid #e2e8f0;border-top:3px solid #3b82f6;border-radius:50%;animation:sp .7s linear infinite;vertical-align:middle}
-@keyframes sp{to{transform:rotate(360deg)}}
-.rbtn{position:fixed;bottom:16px;right:16px;width:48px;height:48px;border-radius:50%;background:#1e40af;color:#fff;border:none;cursor:pointer;font-size:20px;box-shadow:0 4px 14px rgba(30,64,175,.35);z-index:100;display:flex;align-items:center;justify-content:center;transition:transform .15s}
-.rbtn:active{transform:scale(.92)}.rbtn.on svg{animation:sp .7s linear infinite}
-.foot{margin:8px 12px 80px;padding:12px;background:#fffbeb;border:1px solid #fbbf24;border-radius:8px;font-size:9px;color:#a16207;line-height:1.6}
-.foot b{font-weight:700}.sep{color:#cbd5e1;margin:0 6px}
-@media(max-width:600px){
-.x{display:none!important}.hd{padding:12px 8px}.hd h1{font-size:16px}
-.hd .ts{font-size:9px;padding:2px 8px}.tb{padding:8px 10px;font-size:10px}
-th{padding:6px 4px;font-size:8px}td{padding:6px 4px;font-size:11px}
-.g,.b{font-size:12px}.nw{font-size:13px}.rbtn{width:42px;height:42px;bottom:10px;right:10px}
-}
-</style>
-</head>
-<body>
 
+.foot{margin:8px 12px 16px;padding:12px;background:#fffbeb;border:1px solid #fbbf24;border-radius:8px;font-size:9px;color:#a16207;line-height:1.5}
+.foot legend{font-weight:700}
+.sep{color:#cbd5e1;margin:0 6px}
+
+@media(max-width:600px){
+.x{display:none!important}
+.hd{padding:12px 8px}
+.hd h1{font-size:16px}
+.hd .ts{font-size:9px;padding:2px 8px}
+.tb{padding:8px 10px;font-size:10px}
+th{padding:6px 4px;font-size:8px}
+td{padding:6px 4px;font-size:11px}
+.g,.b{font-size:12px}
+.nw{font-size:13px}
+}
+</style></head>
+<body>
 <div class="hd">
-<h1>🏦 Top Inversiones Argentina V3</h1>
-<div class="ts" id="ts">—</div>
-<p class="info">Fuente: api.argentinadatos.com · Datos en tiempo real (sin caché)</p>
-<p class="err" id="err-bar"></p>
+<h1>🏠 Top Inversiones Argentina</h1>
+<div class="ts">📅 05/04/2026</div>
+<p class="info">Fuente: api.argentinadatos.com · Datos de BCRA, CAFCI, CNV</p>
 </div>
 
-<div class="tabs" id="tbar"></div>
-<div id="panels"></div>
+<div class="tabs">
+<button class="tb on" onclick="s('general')">🏠 General</button>
+<button class="tb" onclick="s('cuentas')">💳 Cuentas</button>
+<button class="tb" onclick="s('pf')">🏦 Plazos Fijos</button>
+<button class="tb" onclick="s('pf_uva')">🏦 PF UVA</button>
+<button class="tb" onclick="s('fci')">📈 FCI</button>
+<button class="tb" onclick="s('letras')">🏛️ Letras</button>
+<button class="tb" onclick="s('cripto')">₿ Cripto</button>
+<button class="tb" onclick="s('usd')">💵 Dólar</button>
+</div>
+<div class="tc on" id="general"><div class="w"><table><thead><tr><th>\u2116</th><th>Entidad</th><th class="g">TNA</th><th class="t">TEA</th><th>Liquidez</th><th class="x">L\u00edmite</th><th>Fuente</th><th class="x">Actualizaci\u00f3n</th></tr></thead><tbody>
+<tr>
+<td align="center">1</td>
+<td><strong>Banco Voii S.A.</strong><br><span class="bk">Plazo Fijo</span></td>
+<td class="g">28.00%</td>
+<td class="t">31.89%</td>
+<td><span class="bg bm">30d</span></td>
+<td class="x">—</td>
+<td class="sc"><a href="https://api.argentinadatos.com/v1/finanzas/tasas/plazoFijo" target="_blank" rel="noopener noopener">Argentinadatos</a></td>
+<td class="x upd">05/04/2026</td>
+</tr><tr>
+<td align="center">2</td>
+<td><strong>Banco Cmf S.A.</strong><br><span class="bk">Plazo Fijo</span></td>
+<td class="g">27.50%</td>
+<td class="t">31.25%</td>
+<td><span class="bg bm">30d</span></td>
+<td class="x">—</td>
+<td class="sc"><a href="https://api.argentinadatos.com/v1/finanzas/tasas/plazoFijo" target="_blank" rel="noopener noopener">Argentinadatos</a></td>
+<td class="x upd">05/04/2026</td>
+</tr><tr>
+<td align="center">3</td>
+<td><strong>Crédito Regional Compañía Financiera S.A.U.</strong><br><span class="bk">Plazo Fijo</span></td>
+<td class="g">27.50%</td>
+<td class="t">31.25%</td>
+<td><span class="bg bm">30d</span></td>
+<td class="x">—</td>
+<td class="sc"><a href="https://api.argentinadatos.com/v1/finanzas/tasas/plazoFijo" target="_blank" rel="noopener noopener">Argentinadatos</a></td>
+<td class="x upd">05/04/2026</td>
+</tr><tr>
+<td align="center">4</td>
+<td><strong>Banco Meridian S.A.</strong><br><span class="bk">Plazo Fijo</span></td>
+<td class="g">27.25%</td>
+<td class="t">30.92%</td>
+<td><span class="bg bm">30d</span></td>
+<td class="x">—</td>
+<td class="sc"><a href="https://api.argentinadatos.com/v1/finanzas/tasas/plazoFijo" target="_blank" rel="noopener noopener">Argentinadatos</a></td>
+<td class="x upd">05/04/2026</td>
+</tr><tr>
+<td align="center">5</td>
+<td><strong>Banco Bica S.A.</strong><br><span class="bk">Plazo Fijo</span></td>
+<td class="g">27.00%</td>
+<td class="t">30.60%</td>
+<td><span class="bg bm">30d</span></td>
+<td class="x">—</td>
+<td class="sc"><a href="https://api.argentinadatos.com/v1/finanzas/tasas/plazoFijo" target="_blank" rel="noopener noopener">Argentinadatos</a></td>
+<td class="x upd">05/04/2026</td>
+</tr><tr>
+<td align="center">6</td>
+<td><strong>Banco Nación</strong><br><span class="bk">Cta Remunerada</span><br><span class="cond">Clientes de cartera consumo, titulares de una cuenta sueldo.</span></td>
+<td class="g">18.00%</td>
+<td class="t">19.72%</td>
+<td><span class="bg bi">Inmediata</span></td>
+<td class="x">$2M</td>
+<td class="sc"><a href="https://api.argentinadatos.com/v1/finanzas/fci/otros/ultimo" target="_blank" rel="noopener noopener">Argentinadatos</a></td>
+<td class="x upd">05/04/2026</td>
+</tr><tr>
+<td align="center">7</td>
+<td><strong>Supervielle</strong><br><span class="bk">Cta Remunerada</span><br><span class="cond">Solo Clientes Plan Sueldo.</span></td>
+<td class="g">17.50%</td>
+<td class="t">19.12%</td>
+<td><span class="bg bi">Inmediata</span></td>
+<td class="x">$1M</td>
+<td class="sc"><a href="https://api.argentinadatos.com/v1/finanzas/fci/otros/ultimo" target="_blank" rel="noopener noopener">Argentinadatos</a></td>
+<td class="x upd">03/04/2026</td>
+</tr><tr>
+<td align="center">8</td>
+<td><strong>nexo</strong><br><span class="bk">Crypto USDT</span></td>
+<td class="g">12.00%</td>
+<td class="t">12.00%</td>
+<td><span class="bg bi">Inm</span></td>
+<td class="x">—</td>
+<td class="sc"><a href="https://api.argentinadatos.com/v1/finanzas/rendimientos" target="_blank" rel="noopener noopener">Arg.</a></td>
+<td class="x upd">05/04/2026</td>
+</tr><tr>
+<td align="center">9</td>
+<td><strong>nexo</strong><br><span class="bk">Crypto DAI</span></td>
+<td class="g">11.50%</td>
+<td class="t">11.50%</td>
+<td><span class="bg bi">Inm</span></td>
+<td class="x">—</td>
+<td class="sc"><a href="https://api.argentinadatos.com/v1/finanzas/rendimientos" target="_blank" rel="noopener noopener">Arg.</a></td>
+<td class="x upd">05/04/2026</td>
+</tr><tr>
+<td align="center">10</td>
+<td><strong>CMA Performance</strong><br><span class="bk">FCI RF (medio)</span></td>
+<td class="g">—</td>
+<td class="t">—</td>
+<td><span class="bg bm">Medio</span></td>
+<td class="x">—</td>
+<td class="sc"><a href="https://api.argentinadatos.com/v1/finanzas/fci/rentaFija/ultimo" target="_blank" rel="noopener noopener">Argentinadatos</a></td>
+<td class="x upd">01/04/2026</td>
+</tr><tr>
+<td align="center">11</td>
+<td><strong>Gainvest Capital II</strong><br><span class="bk">FCI RF (medio)</span></td>
+<td class="g">—</td>
+<td class="t">—</td>
+<td><span class="bg bm">Medio</span></td>
+<td class="x">—</td>
+<td class="sc"><a href="https://api.argentinadatos.com/v1/finanzas/fci/rentaFija/ultimo" target="_blank" rel="noopener noopener">Argentinadatos</a></td>
+<td class="x upd">01/04/2026</td>
+</tr><tr>
+<td align="center">12</td>
+<td><strong>Consultatio Renta Dolares</strong><br><span class="bk">FCI USD RF (medio)</span></td>
+<td class="g">—</td>
+<td class="t">—</td>
+<td><span class="bg bm">Medio</span></td>
+<td class="x">—</td>
+<td class="sc"><a href="https://api.argentinadatos.com/v1/finanzas/fci/rentaFija/ultimo" target="_blank" rel="noopener noopener">Argentinadatos</a></td>
+<td class="x upd">01/04/2026</td>
+</tr><tr>
+<td align="center">13</td>
+<td><strong>Allaria Dólar Dinámico</strong><br><span class="bk">FCI USD RF (medio)</span></td>
+<td class="g">—</td>
+<td class="t">—</td>
+<td><span class="bg bm">Medio</span></td>
+<td class="x">—</td>
+<td class="sc"><a href="https://api.argentinadatos.com/v1/finanzas/fci/rentaFija/ultimo" target="_blank" rel="noopener noopener">Argentinadatos</a></td>
+<td class="x upd">01/04/2026</td>
+</tr></tbody></table></div></div>
+<div class="tc" id="cuentas"><div class="w"><table><thead><tr><th>\u2116</th><th>Entidad</th><th class="g">TNA</th><th class="t">TEA</th><th>Liquidez</th><th class="x">L\u00edmite</th><th>Fuente</th><th class="x">Actualizaci\u00f3n</th></tr></thead><tbody>
+<tr>
+<td align="center">1</td>
+<td><strong>Banco Nación</strong><br><span class="bk">Cta Remunerada</span><br><span class="cond">Clientes de cartera consumo, titulares de una cuenta sueldo.</span></td>
+<td class="g">18.00%</td>
+<td class="t">19.72%</td>
+<td><span class="bg bi">Inmediata</span></td>
+<td class="x">$2M</td>
+<td class="sc"><a href="https://api.argentinadatos.com/v1/finanzas/fci/otros/ultimo" target="_blank" rel="noopener noopener">Argentinadatos</a></td>
+<td class="x upd">05/04/2026</td>
+</tr><tr>
+<td align="center">2</td>
+<td><strong>Supervielle</strong><br><span class="bk">Cta Remunerada</span><br><span class="cond">Solo Clientes Plan Sueldo.</span></td>
+<td class="g">17.50%</td>
+<td class="t">19.12%</td>
+<td><span class="bg bi">Inmediata</span></td>
+<td class="x">$1M</td>
+<td class="sc"><a href="https://api.argentinadatos.com/v1/finanzas/fci/otros/ultimo" target="_blank" rel="noopener noopener">Argentinadatos</a></td>
+<td class="x upd">03/04/2026</td>
+</tr></tbody></table></div></div>
+<div class="tc" id="pf"><div class="w"><table><thead><tr><th>\u2116</th><th>Entidad</th><th class="g">TNA</th><th class="t">TEA</th><th>Liquidez</th><th class="x">L\u00edmite</th><th>Fuente</th><th class="x">Actualizaci\u00f3n</th></tr></thead><tbody>
+<tr>
+<td align="center">1</td>
+<td><strong>Banco Voii S.A.</strong><br><span class="bk">Plazo Fijo</span></td>
+<td class="g">28.00%</td>
+<td class="t">31.89%</td>
+<td><span class="bg bm">30d</span></td>
+<td class="x">—</td>
+<td class="sc"><a href="https://api.argentinadatos.com/v1/finanzas/tasas/plazoFijo" target="_blank" rel="noopener noopener">Argentinadatos</a></td>
+<td class="x upd">05/04/2026</td>
+</tr><tr>
+<td align="center">2</td>
+<td><strong>Banco Cmf S.A.</strong><br><span class="bk">Plazo Fijo</span></td>
+<td class="g">27.50%</td>
+<td class="t">31.25%</td>
+<td><span class="bg bm">30d</span></td>
+<td class="x">—</td>
+<td class="sc"><a href="https://api.argentinadatos.com/v1/finanzas/tasas/plazoFijo" target="_blank" rel="noopener noopener">Argentinadatos</a></td>
+<td class="x upd">05/04/2026</td>
+</tr><tr>
+<td align="center">3</td>
+<td><strong>Crédito Regional Compañía Financiera S.A.U.</strong><br><span class="bk">Plazo Fijo</span></td>
+<td class="g">27.50%</td>
+<td class="t">31.25%</td>
+<td><span class="bg bm">30d</span></td>
+<td class="x">—</td>
+<td class="sc"><a href="https://api.argentinadatos.com/v1/finanzas/tasas/plazoFijo" target="_blank" rel="noopener noopener">Argentinadatos</a></td>
+<td class="x upd">05/04/2026</td>
+</tr><tr>
+<td align="center">4</td>
+<td><strong>Banco Meridian S.A.</strong><br><span class="bk">Plazo Fijo</span></td>
+<td class="g">27.25%</td>
+<td class="t">30.92%</td>
+<td><span class="bg bm">30d</span></td>
+<td class="x">—</td>
+<td class="sc"><a href="https://api.argentinadatos.com/v1/finanzas/tasas/plazoFijo" target="_blank" rel="noopener noopener">Argentinadatos</a></td>
+<td class="x upd">05/04/2026</td>
+</tr><tr>
+<td align="center">5</td>
+<td><strong>Banco Bica S.A.</strong><br><span class="bk">Plazo Fijo</span></td>
+<td class="g">27.00%</td>
+<td class="t">30.60%</td>
+<td><span class="bg bm">30d</span></td>
+<td class="x">—</td>
+<td class="sc"><a href="https://api.argentinadatos.com/v1/finanzas/tasas/plazoFijo" target="_blank" rel="noopener noopener">Argentinadatos</a></td>
+<td class="x upd">05/04/2026</td>
+</tr><tr>
+<td align="center">6</td>
+<td><strong>Reba Compañia Financiera S.A.</strong><br><span class="bk">Plazo Fijo</span></td>
+<td class="g">27.00%</td>
+<td class="t">30.60%</td>
+<td><span class="bg bm">30d</span></td>
+<td class="x">—</td>
+<td class="sc"><a href="https://api.argentinadatos.com/v1/finanzas/tasas/plazoFijo" target="_blank" rel="noopener noopener">Argentinadatos</a></td>
+<td class="x upd">05/04/2026</td>
+</tr><tr>
+<td align="center">7</td>
+<td><strong>Banco De La Provincia De Cordoba S.A.</strong><br><span class="bk">Plazo Fijo</span></td>
+<td class="g">25.50%</td>
+<td class="t">28.70%</td>
+<td><span class="bg bm">30d</span></td>
+<td class="x">—</td>
+<td class="sc"><a href="https://api.argentinadatos.com/v1/finanzas/tasas/plazoFijo" target="_blank" rel="noopener noopener">Argentinadatos</a></td>
+<td class="x upd">05/04/2026</td>
+</tr><tr>
+<td align="center">8</td>
+<td><strong>Banco Del Sol S.A.</strong><br><span class="bk">Plazo Fijo</span></td>
+<td class="g">25.50%</td>
+<td class="t">28.70%</td>
+<td><span class="bg bm">30d</span></td>
+<td class="x">—</td>
+<td class="sc"><a href="https://api.argentinadatos.com/v1/finanzas/tasas/plazoFijo" target="_blank" rel="noopener noopener">Argentinadatos</a></td>
+<td class="x upd">05/04/2026</td>
+</tr><tr>
+<td align="center">9</td>
+<td><strong>Banco De Comercio S.A.</strong><br><span class="bk">Plazo Fijo</span></td>
+<td class="g">25.00%</td>
+<td class="t">28.07%</td>
+<td><span class="bg bm">30d</span></td>
+<td class="x">—</td>
+<td class="sc"><a href="https://api.argentinadatos.com/v1/finanzas/tasas/plazoFijo" target="_blank" rel="noopener noopener">Argentinadatos</a></td>
+<td class="x upd">05/04/2026</td>
+</tr><tr>
+<td align="center">10</td>
+<td><strong>Banco Dino S.A.</strong><br><span class="bk">Plazo Fijo</span></td>
+<td class="g">25.00%</td>
+<td class="t">28.07%</td>
+<td><span class="bg bm">30d</span></td>
+<td class="x">—</td>
+<td class="sc"><a href="https://api.argentinadatos.com/v1/finanzas/tasas/plazoFijo" target="_blank" rel="noopener noopener">Argentinadatos</a></td>
+<td class="x upd">05/04/2026</td>
+</tr><tr>
+<td align="center">11</td>
+<td><strong>Banco Mariva S.A.</strong><br><span class="bk">Plazo Fijo</span></td>
+<td class="g">25.00%</td>
+<td class="t">28.07%</td>
+<td><span class="bg bm">30d</span></td>
+<td class="x">—</td>
+<td class="sc"><a href="https://api.argentinadatos.com/v1/finanzas/tasas/plazoFijo" target="_blank" rel="noopener noopener">Argentinadatos</a></td>
+<td class="x upd">05/04/2026</td>
+</tr><tr>
+<td align="center">12</td>
+<td><strong>Uala</strong><br><span class="bk">Plazo Fijo</span></td>
+<td class="g">25.00%</td>
+<td class="t">28.07%</td>
+<td><span class="bg bm">30d</span></td>
+<td class="x">—</td>
+<td class="sc"><a href="https://api.argentinadatos.com/v1/finanzas/tasas/plazoFijo" target="_blank" rel="noopener noopener">Argentinadatos</a></td>
+<td class="x upd">05/04/2026</td>
+</tr><tr>
+<td align="center">13</td>
+<td><strong>Banco Macro S.A.</strong><br><span class="bk">Plazo Fijo</span></td>
+<td class="g">24.00%</td>
+<td class="t">26.82%</td>
+<td><span class="bg bm">30d</span></td>
+<td class="x">—</td>
+<td class="sc"><a href="https://api.argentinadatos.com/v1/finanzas/tasas/plazoFijo" target="_blank" rel="noopener noopener">Argentinadatos</a></td>
+<td class="x upd">05/04/2026</td>
+</tr><tr>
+<td align="center">14</td>
+<td><strong>Banco Del Chubut S.A.</strong><br><span class="bk">Plazo Fijo</span></td>
+<td class="g">24.00%</td>
+<td class="t">26.82%</td>
+<td><span class="bg bm">30d</span></td>
+<td class="x">—</td>
+<td class="sc"><a href="https://api.argentinadatos.com/v1/finanzas/tasas/plazoFijo" target="_blank" rel="noopener noopener">Argentinadatos</a></td>
+<td class="x upd">05/04/2026</td>
+</tr><tr>
+<td align="center">15</td>
+<td><strong>Banco Masventas S.A.</strong><br><span class="bk">Plazo Fijo</span></td>
+<td class="g">24.00%</td>
+<td class="t">26.82%</td>
+<td><span class="bg bm">30d</span></td>
+<td class="x">—</td>
+<td class="sc"><a href="https://api.argentinadatos.com/v1/finanzas/tasas/plazoFijo" target="_blank" rel="noopener noopener">Argentinadatos</a></td>
+<td class="x upd">05/04/2026</td>
+</tr></tbody></table></div></div>
+<div class="tc" id="pf_uva"><div class="w"><table><thead><tr><th>\u2116</th><th>Entidad</th><th class="g">TNA</th><th class="t">TEA</th><th>Liquidez</th><th class="x">L\u00edmite</th><th>Fuente</th><th class="x">Actualizaci\u00f3n</th></tr></thead><tbody>
+<tr>
+<td align="center">1</td>
+<td><strong>Nación Argentina</strong><br><span class="bk">PF UVA</span></td>
+<td class="g">4.75%</td>
+<td class="t">4.54%</td>
+<td><span class="bg bm">1080-1095d</span></td>
+<td class="x">—</td>
+<td class="sc"><a href="https://api.argentinadatos.com/v1/finanzas/tasas/plazoFijoUvaPagoPeriodico" target="_blank" rel="noopener noopener">Argentinadatos</a></td>
+<td class="x upd">05/04/2026</td>
+</tr><tr>
+<td align="center">2</td>
+<td><strong>Nación Argentina</strong><br><span class="bk">PF UVA</span></td>
+<td class="g">4.50%</td>
+<td class="t">4.36%</td>
+<td><span class="bg bm">900-1079d</span></td>
+<td class="x">—</td>
+<td class="sc"><a href="https://api.argentinadatos.com/v1/finanzas/tasas/plazoFijoUvaPagoPeriodico" target="_blank" rel="noopener noopener">Argentinadatos</a></td>
+<td class="x upd">05/04/2026</td>
+</tr><tr>
+<td align="center">3</td>
+<td><strong>Nación Argentina</strong><br><span class="bk">PF UVA</span></td>
+<td class="g">4.25%</td>
+<td class="t">4.17%</td>
+<td><span class="bg bm">720-899d</span></td>
+<td class="x">—</td>
+<td class="sc"><a href="https://api.argentinadatos.com/v1/finanzas/tasas/plazoFijoUvaPagoPeriodico" target="_blank" rel="noopener noopener">Argentinadatos</a></td>
+<td class="x upd">05/04/2026</td>
+</tr><tr>
+<td align="center">4</td>
+<td><strong>Nación Argentina</strong><br><span class="bk">PF UVA</span></td>
+<td class="g">4.00%</td>
+<td class="t">3.96%</td>
+<td><span class="bg bm">540-719d</span></td>
+<td class="x">—</td>
+<td class="sc"><a href="https://api.argentinadatos.com/v1/finanzas/tasas/plazoFijoUvaPagoPeriodico" target="_blank" rel="noopener noopener">Argentinadatos</a></td>
+<td class="x upd">05/04/2026</td>
+</tr><tr>
+<td align="center">5</td>
+<td><strong>Nación Argentina</strong><br><span class="bk">PF UVA</span></td>
+<td class="g">3.75%</td>
+<td class="t">3.75%</td>
+<td><span class="bg bm">360-539d</span></td>
+<td class="x">—</td>
+<td class="sc"><a href="https://api.argentinadatos.com/v1/finanzas/tasas/plazoFijoUvaPagoPeriodico" target="_blank" rel="noopener noopener">Argentinadatos</a></td>
+<td class="x upd">05/04/2026</td>
+</tr><tr>
+<td align="center">6</td>
+<td><strong>Nación Argentina</strong><br><span class="bk">PF UVA</span></td>
+<td class="g">2.25%</td>
+<td class="t">2.26%</td>
+<td><span class="bg bm">180-359d</span></td>
+<td class="x">—</td>
+<td class="sc"><a href="https://api.argentinadatos.com/v1/finanzas/tasas/plazoFijoUvaPagoPeriodico" target="_blank" rel="noopener noopener">Argentinadatos</a></td>
+<td class="x upd">05/04/2026</td>
+</tr><tr>
+<td align="center">7</td>
+<td><strong>Nación Argentina</strong><br><span class="bk">PF UVA</span></td>
+<td class="g">1.75%</td>
+<td class="t">1.76%</td>
+<td><span class="bg bm">120-179d</span></td>
+<td class="x">—</td>
+<td class="sc"><a href="https://api.argentinadatos.com/v1/finanzas/tasas/plazoFijoUvaPagoPeriodico" target="_blank" rel="noopener noopener">Argentinadatos</a></td>
+<td class="x upd">05/04/2026</td>
+</tr><tr>
+<td align="center">8</td>
+<td><strong>Nación Argentina</strong><br><span class="bk">PF UVA</span></td>
+<td class="g">1.50%</td>
+<td class="t">1.51%</td>
+<td><span class="bg bm">90-119d</span></td>
+<td class="x">—</td>
+<td class="sc"><a href="https://api.argentinadatos.com/v1/finanzas/tasas/plazoFijoUvaPagoPeriodico" target="_blank" rel="noopener noopener">Argentinadatos</a></td>
+<td class="x upd">05/04/2026</td>
+</tr></tbody></table></div></div>
+<div class="tc" id="fci"><div class="w"><table><thead><tr><th>\u2116</th><th>Entidad</th><th class="b">TNA</th><th class="t">TEA</th><th>Liquidez</th><th class="x">L\u00edmite</th><th>Fuente</th><th class="x">Actualizaci\u00f3n</th></tr></thead><tbody>
+<tr>
+<td align="center">1</td>
+<td><strong>CMA Performance</strong><br><span class="bk">FCI RF (medio)</span></td>
+<td class="b">—</td>
+<td class="t">—</td>
+<td><span class="bg bm">Medio</span></td>
+<td class="x">—</td>
+<td class="sc"><a href="https://api.argentinadatos.com/v1/finanzas/fci/rentaFija/ultimo" target="_blank" rel="noopener noopener">Argentinadatos</a></td>
+<td class="x upd">01/04/2026</td>
+</tr><tr>
+<td align="center">2</td>
+<td><strong>Gainvest Capital II</strong><br><span class="bk">FCI RF (medio)</span></td>
+<td class="b">—</td>
+<td class="t">—</td>
+<td><span class="bg bm">Medio</span></td>
+<td class="x">—</td>
+<td class="sc"><a href="https://api.argentinadatos.com/v1/finanzas/fci/rentaFija/ultimo" target="_blank" rel="noopener noopener">Argentinadatos</a></td>
+<td class="x upd">01/04/2026</td>
+</tr><tr>
+<td align="center">3</td>
+<td><strong>Gainvest Capital II</strong><br><span class="bk">FCI RF (medio)</span></td>
+<td class="b">—</td>
+<td class="t">—</td>
+<td><span class="bg bm">Medio</span></td>
+<td class="x">—</td>
+<td class="sc"><a href="https://api.argentinadatos.com/v1/finanzas/fci/rentaFija/ultimo" target="_blank" rel="noopener noopener">Argentinadatos</a></td>
+<td class="x upd">01/04/2026</td>
+</tr><tr>
+<td align="center">4</td>
+<td><strong>Optimum Multi Asset Fund</strong><br><span class="bk">FCI RF (corto)</span></td>
+<td class="b">—</td>
+<td class="t">—</td>
+<td><span class="bg bm">Corto</span></td>
+<td class="x">—</td>
+<td class="sc"><a href="https://api.argentinadatos.com/v1/finanzas/fci/rentaFija/ultimo" target="_blank" rel="noopener noopener">Argentinadatos</a></td>
+<td class="x upd">01/04/2026</td>
+</tr><tr>
+<td align="center">5</td>
+<td><strong>Adcap Renta Fija</strong><br><span class="bk">FCI RF (medio)</span></td>
+<td class="b">—</td>
+<td class="t">—</td>
+<td><span class="bg bm">Medio</span></td>
+<td class="x">—</td>
+<td class="sc"><a href="https://api.argentinadatos.com/v1/finanzas/fci/rentaFija/ultimo" target="_blank" rel="noopener noopener">Argentinadatos</a></td>
+<td class="x upd">01/04/2026</td>
+</tr><tr>
+<td align="center">6</td>
+<td><strong>Adcap ASB Multiactivo</strong><br><span class="bk">FCI RF (medio)</span></td>
+<td class="b">—</td>
+<td class="t">—</td>
+<td><span class="bg bm">Medio</span></td>
+<td class="x">—</td>
+<td class="sc"><a href="https://api.argentinadatos.com/v1/finanzas/fci/rentaFija/ultimo" target="_blank" rel="noopener noopener">Argentinadatos</a></td>
+<td class="x upd">01/04/2026</td>
+</tr><tr>
+<td align="center">7</td>
+<td><strong>Adcap Balanceado IX</strong><br><span class="bk">FCI RF (medio)</span></td>
+<td class="b">—</td>
+<td class="t">—</td>
+<td><span class="bg bm">Medio</span></td>
+<td class="x">—</td>
+<td class="sc"><a href="https://api.argentinadatos.com/v1/finanzas/fci/rentaFija/ultimo" target="_blank" rel="noopener noopener">Argentinadatos</a></td>
+<td class="x upd">01/04/2026</td>
+</tr><tr>
+<td align="center">8</td>
+<td><strong>Adcap Balanceado XVII</strong><br><span class="bk">FCI RF (medio)</span></td>
+<td class="b">—</td>
+<td class="t">—</td>
+<td><span class="bg bm">Medio</span></td>
+<td class="x">—</td>
+<td class="sc"><a href="https://api.argentinadatos.com/v1/finanzas/fci/rentaFija/ultimo" target="_blank" rel="noopener noopener">Argentinadatos</a></td>
+<td class="x upd">01/04/2026</td>
+</tr><tr>
+<td align="center">9</td>
+<td><strong>Allaria Renta Mixta II</strong><br><span class="bk">FCI RF (largo)</span></td>
+<td class="b">—</td>
+<td class="t">—</td>
+<td><span class="bg bm">Largo</span></td>
+<td class="x">—</td>
+<td class="sc"><a href="https://api.argentinadatos.com/v1/finanzas/fci/rentaFija/ultimo" target="_blank" rel="noopener noopener">Argentinadatos</a></td>
+<td class="x upd">01/04/2026</td>
+</tr><tr>
+<td align="center">10</td>
+<td><strong>Argenfunds Renta Argentina</strong><br><span class="bk">FCI RF (medio)</span></td>
+<td class="b">—</td>
+<td class="t">—</td>
+<td><span class="bg bm">Medio</span></td>
+<td class="x">—</td>
+<td class="sc"><a href="https://api.argentinadatos.com/v1/finanzas/fci/rentaFija/ultimo" target="_blank" rel="noopener noopener">Argentinadatos</a></td>
+<td class="x upd">01/04/2026</td>
+</tr><tr>
+<td align="center">11</td>
+<td><strong>Argenfunds Renta Pesos</strong><br><span class="bk">FCI RF (medio)</span></td>
+<td class="b">—</td>
+<td class="t">—</td>
+<td><span class="bg bm">Medio</span></td>
+<td class="x">—</td>
+<td class="sc"><a href="https://api.argentinadatos.com/v1/finanzas/fci/rentaFija/ultimo" target="_blank" rel="noopener noopener">Argentinadatos</a></td>
+<td class="x upd">01/04/2026</td>
+</tr><tr>
+<td align="center">12</td>
+<td><strong>Balanz Capital Renta Fija</strong><br><span class="bk">FCI RF (flex)</span></td>
+<td class="b">—</td>
+<td class="t">—</td>
+<td><span class="bg bm">Flex</span></td>
+<td class="x">—</td>
+<td class="sc"><a href="https://api.argentinadatos.com/v1/finanzas/fci/rentaFija/ultimo" target="_blank" rel="noopener noopener">Argentinadatos</a></td>
+<td class="x upd">01/04/2026</td>
+</tr><tr>
+<td align="center">13</td>
+<td><strong>Balanz Capital Renta Fija</strong><br><span class="bk">FCI RF (flex)</span></td>
+<td class="b">—</td>
+<td class="t">—</td>
+<td><span class="bg bm">Flex</span></td>
+<td class="x">—</td>
+<td class="sc"><a href="https://api.argentinadatos.com/v1/finanzas/fci/rentaFija/ultimo" target="_blank" rel="noopener noopener">Argentinadatos</a></td>
+<td class="x upd">01/04/2026</td>
+</tr><tr>
+<td align="center">14</td>
+<td><strong>Balanz Capital Renta Fija</strong><br><span class="bk">FCI RF (flex)</span></td>
+<td class="b">—</td>
+<td class="t">—</td>
+<td><span class="bg bm">Flex</span></td>
+<td class="x">—</td>
+<td class="sc"><a href="https://api.argentinadatos.com/v1/finanzas/fci/rentaFija/ultimo" target="_blank" rel="noopener noopener">Argentinadatos</a></td>
+<td class="x upd">01/04/2026</td>
+</tr><tr>
+<td align="center">15</td>
+<td><strong>Balanz Capital Renta Fija</strong><br><span class="bk">FCI RF (flex)</span></td>
+<td class="b">—</td>
+<td class="t">—</td>
+<td><span class="bg bm">Flex</span></td>
+<td class="x">—</td>
+<td class="sc"><a href="https://api.argentinadatos.com/v1/finanzas/fci/rentaFija/ultimo" target="_blank" rel="noopener noopener">Argentinadatos</a></td>
+<td class="x upd">01/04/2026</td>
+</tr><tr>
+<td align="center">16</td>
+<td><strong>Balanz Excalibur Regisseur</strong><br><span class="bk">FCI RF (largo)</span></td>
+<td class="b">—</td>
+<td class="t">—</td>
+<td><span class="bg bm">Largo</span></td>
+<td class="x">—</td>
+<td class="sc"><a href="https://api.argentinadatos.com/v1/finanzas/fci/rentaFija/ultimo" target="_blank" rel="noopener noopener">Argentinadatos</a></td>
+<td class="x upd">01/04/2026</td>
+</tr><tr>
+<td align="center">17</td>
+<td><strong>Balanz Excalibur Regisseur</strong><br><span class="bk">FCI RF (largo)</span></td>
+<td class="b">—</td>
+<td class="t">—</td>
+<td><span class="bg bm">Largo</span></td>
+<td class="x">—</td>
+<td class="sc"><a href="https://api.argentinadatos.com/v1/finanzas/fci/rentaFija/ultimo" target="_blank" rel="noopener noopener">Argentinadatos</a></td>
+<td class="x upd">01/04/2026</td>
+</tr><tr>
+<td align="center">18</td>
+<td><strong>Balanz Excalibur Regisseur</strong><br><span class="bk">FCI RF (largo)</span></td>
+<td class="b">—</td>
+<td class="t">—</td>
+<td><span class="bg bm">Largo</span></td>
+<td class="x">—</td>
+<td class="sc"><a href="https://api.argentinadatos.com/v1/finanzas/fci/rentaFija/ultimo" target="_blank" rel="noopener noopener">Argentinadatos</a></td>
+<td class="x upd">01/04/2026</td>
+</tr><tr>
+<td align="center">19</td>
+<td><strong>Balanz Excalibur Regisseur</strong><br><span class="bk">FCI RF (largo)</span></td>
+<td class="b">—</td>
+<td class="t">—</td>
+<td><span class="bg bm">Largo</span></td>
+<td class="x">—</td>
+<td class="sc"><a href="https://api.argentinadatos.com/v1/finanzas/fci/rentaFija/ultimo" target="_blank" rel="noopener noopener">Argentinadatos</a></td>
+<td class="x upd">01/04/2026</td>
+</tr><tr>
+<td align="center">20</td>
+<td><strong>Balanz Excalibur Regisseur</strong><br><span class="bk">FCI RF (largo)</span></td>
+<td class="b">—</td>
+<td class="t">—</td>
+<td><span class="bg bm">Largo</span></td>
+<td class="x">—</td>
+<td class="sc"><a href="https://api.argentinadatos.com/v1/finanzas/fci/rentaFija/ultimo" target="_blank" rel="noopener noopener">Argentinadatos</a></td>
+<td class="x upd">01/04/2026</td>
+</tr><tr>
+<td align="center">21</td>
+<td><strong>Consultatio Renta Dolares</strong><br><span class="bk">FCI USD RF (medio)</span></td>
+<td class="b">—</td>
+<td class="t">—</td>
+<td><span class="bg bm">Medio</span></td>
+<td class="x">—</td>
+<td class="sc"><a href="https://api.argentinadatos.com/v1/finanzas/fci/rentaFija/ultimo" target="_blank" rel="noopener noopener">Argentinadatos</a></td>
+<td class="x upd">01/04/2026</td>
+</tr><tr>
+<td align="center">22</td>
+<td><strong>Allaria Dólar Dinámico</strong><br><span class="bk">FCI USD RF (medio)</span></td>
+<td class="b">—</td>
+<td class="t">—</td>
+<td><span class="bg bm">Medio</span></td>
+<td class="x">—</td>
+<td class="sc"><a href="https://api.argentinadatos.com/v1/finanzas/fci/rentaFija/ultimo" target="_blank" rel="noopener noopener">Argentinadatos</a></td>
+<td class="x upd">01/04/2026</td>
+</tr><tr>
+<td align="center">23</td>
+<td><strong>Allaria Dólar Gestión</strong><br><span class="bk">FCI USD RF (medio)</span></td>
+<td class="b">—</td>
+<td class="t">—</td>
+<td><span class="bg bm">Medio</span></td>
+<td class="x">—</td>
+<td class="sc"><a href="https://api.argentinadatos.com/v1/finanzas/fci/rentaFija/ultimo" target="_blank" rel="noopener noopener">Argentinadatos</a></td>
+<td class="x upd">01/04/2026</td>
+</tr><tr>
+<td align="center">24</td>
+<td><strong>Allaria Dólar Gestión</strong><br><span class="bk">FCI USD RF (medio)</span></td>
+<td class="b">—</td>
+<td class="t">—</td>
+<td><span class="bg bm">Medio</span></td>
+<td class="x">—</td>
+<td class="sc"><a href="https://api.argentinadatos.com/v1/finanzas/fci/rentaFija/ultimo" target="_blank" rel="noopener noopener">Argentinadatos</a></td>
+<td class="x upd">01/04/2026</td>
+</tr><tr>
+<td align="center">25</td>
+<td><strong>Allaria Dólar Gestión</strong><br><span class="bk">FCI USD RF (medio)</span></td>
+<td class="b">—</td>
+<td class="t">—</td>
+<td><span class="bg bm">Medio</span></td>
+<td class="x">—</td>
+<td class="sc"><a href="https://api.argentinadatos.com/v1/finanzas/fci/rentaFija/ultimo" target="_blank" rel="noopener noopener">Argentinadatos</a></td>
+<td class="x upd">01/04/2026</td>
+</tr><tr>
+<td align="center">26</td>
+<td><strong>Allaria Dólar Gestión</strong><br><span class="bk">FCI USD RF (medio)</span></td>
+<td class="b">—</td>
+<td class="t">—</td>
+<td><span class="bg bm">Medio</span></td>
+<td class="x">—</td>
+<td class="sc"><a href="https://api.argentinadatos.com/v1/finanzas/fci/rentaFija/ultimo" target="_blank" rel="noopener noopener">Argentinadatos</a></td>
+<td class="x upd">01/04/2026</td>
+</tr><tr>
+<td align="center">27</td>
+<td><strong>Allaria Unicred Dólares</strong><br><span class="bk">FCI USD RF (largo)</span></td>
+<td class="b">—</td>
+<td class="t">—</td>
+<td><span class="bg bm">Largo</span></td>
+<td class="x">—</td>
+<td class="sc"><a href="https://api.argentinadatos.com/v1/finanzas/fci/rentaFija/ultimo" target="_blank" rel="noopener noopener">Argentinadatos</a></td>
+<td class="x upd">01/04/2026</td>
+</tr><tr>
+<td align="center">28</td>
+<td><strong>Axis S&C Renta Fija Dolar</strong><br><span class="bk">FCI USD RF (medio)</span></td>
+<td class="b">—</td>
+<td class="t">—</td>
+<td><span class="bg bm">Medio</span></td>
+<td class="x">—</td>
+<td class="sc"><a href="https://api.argentinadatos.com/v1/finanzas/fci/rentaFija/ultimo" target="_blank" rel="noopener noopener">Argentinadatos</a></td>
+<td class="x upd">01/04/2026</td>
+</tr><tr>
+<td align="center">29</td>
+<td><strong>Axis S&C Renta Fija Dolar</strong><br><span class="bk">FCI USD RF (medio)</span></td>
+<td class="b">—</td>
+<td class="t">—</td>
+<td><span class="bg bm">Medio</span></td>
+<td class="x">—</td>
+<td class="sc"><a href="https://api.argentinadatos.com/v1/finanzas/fci/rentaFija/ultimo" target="_blank" rel="noopener noopener">Argentinadatos</a></td>
+<td class="x upd">01/04/2026</td>
+</tr><tr>
+<td align="center">30</td>
+<td><strong>Axis S&C Renta Fija Dolar</strong><br><span class="bk">FCI USD RF (medio)</span></td>
+<td class="b">—</td>
+<td class="t">—</td>
+<td><span class="bg bm">Medio</span></td>
+<td class="x">—</td>
+<td class="sc"><a href="https://api.argentinadatos.com/v1/finanzas/fci/rentaFija/ultimo" target="_blank" rel="noopener noopener">Argentinadatos</a></td>
+<td class="x upd">01/04/2026</td>
+</tr><tr>
+<td align="center">31</td>
+<td><strong>Axis S&C Renta Fija Dolar</strong><br><span class="bk">FCI USD RF (medio)</span></td>
+<td class="b">—</td>
+<td class="t">—</td>
+<td><span class="bg bm">Medio</span></td>
+<td class="x">—</td>
+<td class="sc"><a href="https://api.argentinadatos.com/v1/finanzas/fci/rentaFija/ultimo" target="_blank" rel="noopener noopener">Argentinadatos</a></td>
+<td class="x upd">01/04/2026</td>
+</tr><tr>
+<td align="center">32</td>
+<td><strong>Balanz Capital Estrategia VI USD</strong><br><span class="bk">FCI USD RF (largo)</span></td>
+<td class="b">—</td>
+<td class="t">—</td>
+<td><span class="bg bm">Largo</span></td>
+<td class="x">—</td>
+<td class="sc"><a href="https://api.argentinadatos.com/v1/finanzas/fci/rentaFija/ultimo" target="_blank" rel="noopener noopener">Argentinadatos</a></td>
+<td class="x upd">01/04/2026</td>
+</tr><tr>
+<td align="center">33</td>
+<td><strong>Balanz Capital Estrategia VI USD</strong><br><span class="bk">FCI USD RF (largo)</span></td>
+<td class="b">—</td>
+<td class="t">—</td>
+<td><span class="bg bm">Largo</span></td>
+<td class="x">—</td>
+<td class="sc"><a href="https://api.argentinadatos.com/v1/finanzas/fci/rentaFija/ultimo" target="_blank" rel="noopener noopener">Argentinadatos</a></td>
+<td class="x upd">01/04/2026</td>
+</tr><tr>
+<td align="center">34</td>
+<td><strong>Balanz Capital Estrategia VI USD</strong><br><span class="bk">FCI USD RF (largo)</span></td>
+<td class="b">—</td>
+<td class="t">—</td>
+<td><span class="bg bm">Largo</span></td>
+<td class="x">—</td>
+<td class="sc"><a href="https://api.argentinadatos.com/v1/finanzas/fci/rentaFija/ultimo" target="_blank" rel="noopener noopener">Argentinadatos</a></td>
+<td class="x upd">01/04/2026</td>
+</tr><tr>
+<td align="center">35</td>
+<td><strong>Balanz Capital Estrategia VI USD</strong><br><span class="bk">FCI USD RF (largo)</span></td>
+<td class="b">—</td>
+<td class="t">—</td>
+<td><span class="bg bm">Largo</span></td>
+<td class="x">—</td>
+<td class="sc"><a href="https://api.argentinadatos.com/v1/finanzas/fci/rentaFija/ultimo" target="_blank" rel="noopener noopener">Argentinadatos</a></td>
+<td class="x upd">01/04/2026</td>
+</tr><tr>
+<td align="center">36</td>
+<td><strong>Balanz Capital Estrategia VI USD</strong><br><span class="bk">FCI USD RF (largo)</span></td>
+<td class="b">—</td>
+<td class="t">—</td>
+<td><span class="bg bm">Largo</span></td>
+<td class="x">—</td>
+<td class="sc"><a href="https://api.argentinadatos.com/v1/finanzas/fci/rentaFija/ultimo" target="_blank" rel="noopener noopener">Argentinadatos</a></td>
+<td class="x upd">01/04/2026</td>
+</tr><tr>
+<td align="center">37</td>
+<td><strong>Balanz Capital Estrategia VI USD</strong><br><span class="bk">FCI USD RF (largo)</span></td>
+<td class="b">—</td>
+<td class="t">—</td>
+<td><span class="bg bm">Largo</span></td>
+<td class="x">—</td>
+<td class="sc"><a href="https://api.argentinadatos.com/v1/finanzas/fci/rentaFija/ultimo" target="_blank" rel="noopener noopener">Argentinadatos</a></td>
+<td class="x upd">01/04/2026</td>
+</tr><tr>
+<td align="center">38</td>
+<td><strong>BAVSA Renta Dólares</strong><br><span class="bk">FCI USD RF (medio)</span></td>
+<td class="b">—</td>
+<td class="t">—</td>
+<td><span class="bg bm">Medio</span></td>
+<td class="x">—</td>
+<td class="sc"><a href="https://api.argentinadatos.com/v1/finanzas/fci/rentaFija/ultimo" target="_blank" rel="noopener noopener">Argentinadatos</a></td>
+<td class="x upd">01/04/2026</td>
+</tr><tr>
+<td align="center">39</td>
+<td><strong>BPF Renta Fija Dólar</strong><br><span class="bk">FCI USD RF (medio)</span></td>
+<td class="b">—</td>
+<td class="t">—</td>
+<td><span class="bg bm">Medio</span></td>
+<td class="x">—</td>
+<td class="sc"><a href="https://api.argentinadatos.com/v1/finanzas/fci/rentaFija/ultimo" target="_blank" rel="noopener noopener">Argentinadatos</a></td>
+<td class="x upd">01/04/2026</td>
+</tr><tr>
+<td align="center">40</td>
+<td><strong>Delta Renta Dolares</strong><br><span class="bk">FCI USD RF (flex)</span></td>
+<td class="b">—</td>
+<td class="t">—</td>
+<td><span class="bg bm">Flex</span></td>
+<td class="x">—</td>
+<td class="sc"><a href="https://api.argentinadatos.com/v1/finanzas/fci/rentaFija/ultimo" target="_blank" rel="noopener noopener">Argentinadatos</a></td>
+<td class="x upd">01/04/2026</td>
+</tr></tbody></table></div></div>
+<div class="tc" id="letras"><div class="w"><table><tbody>
+  <p style="padding:20px;text-align:center;color:#94a3b8;">Sin datos de LECAP. Se actualiza en próximo día hábil.</p>
+</tbody></table></div></div>
+<div class="tc" id="cripto"><div class="w"><table><thead><tr><th>\u2116</th><th>Entidad</th><th class="b">TNA</th><th class="t">TEA</th><th>Liquidez</th><th class="x">L\u00edmite</th><th>Fuente</th><th class="x">Actualizaci\u00f3n</th></tr></thead><tbody>
+<tr>
+<td align="center">1</td>
+<td><strong>nexo</strong><br><span class="bk">Crypto USDT</span></td>
+<td class="b">12.00%</td>
+<td class="t">12.00%</td>
+<td><span class="bg bi">Inm</span></td>
+<td class="x">—</td>
+<td class="sc"><a href="https://api.argentinadatos.com/v1/finanzas/rendimientos" target="_blank" rel="noopener noopener">Arg.</a></td>
+<td class="x upd">05/04/2026</td>
+</tr><tr>
+<td align="center">2</td>
+<td><strong>nexo</strong><br><span class="bk">Crypto DAI</span></td>
+<td class="b">11.50%</td>
+<td class="t">11.50%</td>
+<td><span class="bg bi">Inm</span></td>
+<td class="x">—</td>
+<td class="sc"><a href="https://api.argentinadatos.com/v1/finanzas/rendimientos" target="_blank" rel="noopener noopener">Arg.</a></td>
+<td class="x upd">05/04/2026</td>
+</tr><tr>
+<td align="center">3</td>
+<td><strong>nexo</strong><br><span class="bk">Crypto USDC</span></td>
+<td class="b">11.00%</td>
+<td class="t">11.00%</td>
+<td><span class="bg bi">Inm</span></td>
+<td class="x">—</td>
+<td class="sc"><a href="https://api.argentinadatos.com/v1/finanzas/rendimientos" target="_blank" rel="noopener noopener">Arg.</a></td>
+<td class="x upd">05/04/2026</td>
+</tr><tr>
+<td align="center">4</td>
+<td><strong>vesseo</strong><br><span class="bk">Crypto USDC</span></td>
+<td class="b">9.74%</td>
+<td class="t">9.74%</td>
+<td><span class="bg bi">Inm</span></td>
+<td class="x">—</td>
+<td class="sc"><a href="https://api.argentinadatos.com/v1/finanzas/rendimientos" target="_blank" rel="noopener noopener">Arg.</a></td>
+<td class="x upd">05/04/2026</td>
+</tr><tr>
+<td align="center">5</td>
+<td><strong>lemoncash</strong><br><span class="bk">Crypto USDT</span></td>
+<td class="b">8.08%</td>
+<td class="t">8.08%</td>
+<td><span class="bg bi">Inm</span></td>
+<td class="x">—</td>
+<td class="sc"><a href="https://api.argentinadatos.com/v1/finanzas/rendimientos" target="_blank" rel="noopener noopener">Arg.</a></td>
+<td class="x upd">05/04/2026</td>
+</tr><tr>
+<td align="center">6</td>
+<td><strong>fiwind</strong><br><span class="bk">Crypto USDT</span></td>
+<td class="b">5.00%</td>
+<td class="t">5.00%</td>
+<td><span class="bg bi">Inm</span></td>
+<td class="x">—</td>
+<td class="sc"><a href="https://api.argentinadatos.com/v1/finanzas/rendimientos" target="_blank" rel="noopener noopener">Arg.</a></td>
+<td class="x upd">25/11/2024</td>
+</tr><tr>
+<td align="center">7</td>
+<td><strong>fiwind</strong><br><span class="bk">Crypto USDC</span></td>
+<td class="b">5.00%</td>
+<td class="t">5.00%</td>
+<td><span class="bg bi">Inm</span></td>
+<td class="x">—</td>
+<td class="sc"><a href="https://api.argentinadatos.com/v1/finanzas/rendimientos" target="_blank" rel="noopener noopener">Arg.</a></td>
+<td class="x upd">25/11/2024</td>
+</tr><tr>
+<td align="center">8</td>
+<td><strong>lucamoney</strong><br><span class="bk">Crypto USDC</span></td>
+<td class="b">4.14%</td>
+<td class="t">4.14%</td>
+<td><span class="bg bi">Inm</span></td>
+<td class="x">—</td>
+<td class="sc"><a href="https://api.argentinadatos.com/v1/finanzas/rendimientos" target="_blank" rel="noopener noopener">Arg.</a></td>
+<td class="x upd">05/04/2026</td>
+</tr><tr>
+<td align="center">9</td>
+<td><strong>lemoncash</strong><br><span class="bk">Crypto USDC</span></td>
+<td class="b">3.76%</td>
+<td class="t">3.76%</td>
+<td><span class="bg bi">Inm</span></td>
+<td class="x">—</td>
+<td class="sc"><a href="https://api.argentinadatos.com/v1/finanzas/rendimientos" target="_blank" rel="noopener noopener">Arg.</a></td>
+<td class="x upd">05/04/2026</td>
+</tr><tr>
+<td align="center">10</td>
+<td><strong>lemoncash</strong><br><span class="bk">Crypto USDT</span></td>
+<td class="b">3.56%</td>
+<td class="t">3.56%</td>
+<td><span class="bg bi">Inm</span></td>
+<td class="x">—</td>
+<td class="sc"><a href="https://api.argentinadatos.com/v1/finanzas/rendimientos" target="_blank" rel="noopener noopener">Arg.</a></td>
+<td class="x upd">05/04/2026</td>
+</tr><tr>
+<td align="center">11</td>
+<td><strong>lemoncash</strong><br><span class="bk">Crypto USDC</span></td>
+<td class="b">3.38%</td>
+<td class="t">3.38%</td>
+<td><span class="bg bi">Inm</span></td>
+<td class="x">—</td>
+<td class="sc"><a href="https://api.argentinadatos.com/v1/finanzas/rendimientos" target="_blank" rel="noopener noopener">Arg.</a></td>
+<td class="x upd">05/04/2026</td>
+</tr><tr>
+<td align="center">12</td>
+<td><strong>lemoncash</strong><br><span class="bk">Crypto USDC</span></td>
+<td class="b">3.35%</td>
+<td class="t">3.35%</td>
+<td><span class="bg bi">Inm</span></td>
+<td class="x">—</td>
+<td class="sc"><a href="https://api.argentinadatos.com/v1/finanzas/rendimientos" target="_blank" rel="noopener noopener">Arg.</a></td>
+<td class="x upd">05/04/2026</td>
+</tr><tr>
+<td align="center">13</td>
+<td><strong>satoshitango</strong><br><span class="bk">Crypto USDC</span></td>
+<td class="b">3.20%</td>
+<td class="t">3.20%</td>
+<td><span class="bg bi">Inm</span></td>
+<td class="x">—</td>
+<td class="sc"><a href="https://api.argentinadatos.com/v1/finanzas/rendimientos" target="_blank" rel="noopener noopener">Arg.</a></td>
+<td class="x upd">05/04/2026</td>
+</tr><tr>
+<td align="center">14</td>
+<td><strong>satoshitango</strong><br><span class="bk">Crypto USDT</span></td>
+<td class="b">3.20%</td>
+<td class="t">3.20%</td>
+<td><span class="bg bi">Inm</span></td>
+<td class="x">—</td>
+<td class="sc"><a href="https://api.argentinadatos.com/v1/finanzas/rendimientos" target="_blank" rel="noopener noopener">Arg.</a></td>
+<td class="x upd">05/04/2026</td>
+</tr><tr>
+<td align="center">15</td>
+<td><strong>belo</strong><br><span class="bk">Crypto USDT</span></td>
+<td class="b">3.00%</td>
+<td class="t">3.00%</td>
+<td><span class="bg bi">Inm</span></td>
+<td class="x">—</td>
+<td class="sc"><a href="https://api.argentinadatos.com/v1/finanzas/rendimientos" target="_blank" rel="noopener noopener">Arg.</a></td>
+<td class="x upd">05/04/2026</td>
+</tr></tbody></table></div></div>
+<div class="tc" id="usd"><div class="w"><table><thead><tr><th>\u2116</th><th>Entidad</th><th class="b">TNA</th><th class="t">TEA</th><th>Liquidez</th><th class="x">L\u00edmite</th><th>Fuente</th><th class="x">Actualizaci\u00f3n</th></tr></thead><tbody>
+<tr>
+<td align="center">1</td>
+<td><strong>Banco Provincia</strong><br><span class="bk">PF USD</span></td>
+<td class="b">5.50%</td>
+<td class="t">5.65%</td>
+<td><span class="bg bm">365d</span></td>
+<td class="x">—</td>
+<td class="sc"><a href="#" target="_blank" rel="noopener noopener">Arg.</a></td>
+<td class="x upd">05/04/2026</td>
+</tr><tr>
+<td align="center">2</td>
+<td><strong>Banco Nación</strong><br><span class="bk">PF USD</span></td>
+<td class="b">5.00%</td>
+<td class="t">5.13%</td>
+<td><span class="bg bm">365d</span></td>
+<td class="x">—</td>
+<td class="sc"><a href="#" target="_blank" rel="noopener noopener">Arg.</a></td>
+<td class="x upd">05/04/2026</td>
+</tr><tr>
+<td align="center">3</td>
+<td><strong>Banco Macro</strong><br><span class="bk">PF USD</span></td>
+<td class="b">3.80%</td>
+<td class="t">3.85%</td>
+<td><span class="bg bm">365d</span></td>
+<td class="x">—</td>
+<td class="sc"><a href="#" target="_blank" rel="noopener noopener">Arg.</a></td>
+<td class="x upd">05/04/2026</td>
+</tr><tr>
+<td align="center">4</td>
+<td><strong>Varios</strong><br><span class="bk">FCI MM USD</span></td>
+<td class="b">—</td>
+<td class="t">—</td>
+<td><span class="bg bm">2-7d</span></td>
+<td class="x">—</td>
+<td class="sc"><a href="#" target="_blank" rel="noopener noopener">Arg.</a></td>
+<td class="x upd">05/04/2026</td>
+</tr><tr>
+<td align="center">5</td>
+<td><strong>Tesoro</strong><br><span class="bk">Letra USD</span></td>
+<td class="b">—</td>
+<td class="t">—</td>
+<td><span class="bg by">90-180d</span></td>
+<td class="x">—</td>
+<td class="sc"><a href="#" target="_blank" rel="noopener noopener">Arg.</a></td>
+<td class="x upd">05/04/2026</td>
+</tr></tbody></table></div></div>
 
 <div class="foot">
-<b>⚠️ Disclaimer</b><br>
-Datos obtenidos de ArgentinaDatos (BCRA, CAFCI, CNV). No constituye asesoramiento financiero.<br><br>
-💲 Pesos (ARS) <span class="sep">|</span> 💵 Dólares (USD)<br>
-🟩 Liquidez inmediata <span class="sep">·</span> 🟦 Plazo fijo <span class="sep">·</span> 🟨 Mercado/Variable
+<legend>⚠️ Disclaimer</legend>AmericaDatos, BCRA, CAFCI, CNV. No constituye asesoramiento financiero.
+<br><br>💲 Pesos (ARS) <span class="sep">|</span> 💵 Dólares (USD)<br>🟩 Liquidez inmediata <span class="sep">·</span> 🔵 Plazo fijo <span class="sep">·</span> 🟡 Mercado/Variable
 </div>
-
-<button class="rbtn" id="rbtn" title="Actualizar" onclick="loadAll(true)">
-<svg width="22" height="22" fill="none" stroke="currentColor" stroke-width="2.5" viewBox="0 0 24 24"><path d="M1 4v6h6"/><path d="M3.51 15a9 9 0 105.64-8.36L1 10m22 4l-4.64 4.36A9 9 0 013.51 15"/></svg>
-</button>
-
 <script>
-// ─── CONFIG ───
-const API="https://api.argentinadatos.com/v1";
-const D912="https://data912.com/live/arg_notes";
-const TZ="America/Argentina/Buenos_Aires";
-
-// ─── TAB DEFINITIONS ───
-const TABS=[
-  {id:"general",   lbl:"🏠 General",      cc:"g",max:15},
-  {id:"cuentas",   lbl:"💳 Cuentas",      cc:"g",max:15},
-  {id:"pf",        lbl:"🏦 Plazos Fijos",   cc:"g",max:20},
-  {id:"pf_uva",    lbl:"🏦 PF UVA",       cc:"g",max:15},
-  {id:"fci",       lbl:"📊 FCI ARS",      cc:"b",max:20},
-  {id:"fci_usd",   lbl:"📊 FCI USD",      cc:"b",max:20},
-  {id:"letras",    lbl:"🏛️ Letras",       cc:"b",max:15},
-  {id:"cripto",    lbl:"₿ Cripto",        cc:"b",max:15},
-  {id:"usd",       lbl:"💵 Dólar",        cc:"b",max:10}
-];
-
-// ─── HELPERS ───
-const today=()=>new Date().toLocaleDateString("es-AR",{timeZone:TZ});
-const fmtD=s=>{try{const d=new Date(s);return isNaN(d)?today():d.toLocaleDateString("es-AR",{timeZone:TZ})}catch{return today()}};
-const dAgo=s=>{try{const d=new Date(s);return isNaN(d)?999:Math.floor((Date.now()-d)/864e5)}catch{return 999}};
-const fmtN=v=>(v==null||isNaN(v)||v<=0.01||v>50000)?"—":v.toFixed(2)+"%";
-const bgQ=q=>({"Inmediata":"bi","Inm":"bi","30d":"bm","60d":"bm","90d":"bm","365d":"bm","1-2d":"bm","2-7d":"by","90-180d":"by","Var":"by","Mkt":"by","2-7d":"by"}[q]||"bm");
-
-// Mapping entidades cuenta
-const CM={"CARREFOUR BANCO":["Carrefour Banco","Cuenta Remunerada","$4.23M/mes"],
-"BNA":["Banco Nación","Cta Remunerada","$2M"],
-"BRUBANK":["Brubank","Cuenta Remunerada","$750K"],
-"SUPERVIELLE":["Supervielle","Cta Remunerada","$1M"],
-"CRESIUM":["Cresium","Cta Remunerada PJ","—"],
-"UALA":["Ualá","Cuenta Remunerada","$1M"],
-"FIWIND":["Fiwind","Billetera","$750K"],
-"NARANJA X":["Naranja X","Cuenta Remunerada","$1M"]};
-
-const isUSD=s=>{const u=(s||"").toUpperCase();return/\sUSD|DÓLAR| DOL\.|DOLARES/.test(u)};
-const fmtPat=n=>{if(!n||n<=0)return"—";n/=1e6;return n>=1?"$"+n.toFixed(1)+"M":n*1e3>=1?"$"+(n*1e3).toFixed(0)+"K":"—"};
-
-function mk(e,t,tna,tea,lim,liq,fu,url,fd,cond){
-  return{e,t,n:fmtN(tna),a:fmtN(tea),l:lim,q:liq,b:bgQ(liq),f:fu,u:url,d:fd||today(),c:cond||""};
-}
-
-// ─── BUILD UI ───
-const tbar=document.getElementById("tbar");
-const panels=document.getElementById("panels");
-TABS.forEach((t,i)=>{
-  const btn=document.createElement("button");
-  btn.className="tb"+(i?"":" on");btn.id="btn_"+t.id;btn.textContent=t.lbl;
-  btn.onclick=()=>sw(t.id);tbar.appendChild(btn);
-  const div=document.createElement("div");
-  div.className="tc"+(i?"":" on");div.id="p_"+t.id;
-  div.innerHTML=LOAD();panels.appendChild(div);
-});
-
-function sw(id){
-  document.querySelectorAll(".tb").forEach(b=>b.classList.remove("on"));
-  document.querySelectorAll(".tc").forEach(p=>p.classList.remove("on"));
-  document.getElementById("btn_"+id).classList.add("on");
-  document.getElementById("p_"+id).classList.add("on");
-}
-
-function LOAD(){return`<table><thead><tr><th>№</th><th>Entidad</th><th>TNA</th><th class="t">TEA</th><th>Liq.</th><th class="x">Límite</th><th>Fuente</th><th class="x">Act.</th></tr></thead><tbody><tr><td colspan="8" class="empty"><div class="spin"></div> Cargando…</td></tr></tbody></table>`}
-function EMPTY(m){m=m||"Sin datos disponibles hoy (fin de semana / feriado)";return`<table><tbody><tr><td colspan="8" class="empty">${m}</td></tr></tbody></table>`}
-function rows(items,cc){
-  const h=`<thead><tr><th>№</th><th>Entidad</th><th class="${cc}">TNA</th><th class="t">TEA</th><th>Liq.</th><th class="x">Límite</th><th>Fuente</th><th class="x">Act.</th></tr></thead><tbody>`;
-  let b="";items.forEach((it,i)=>{
-    const co=it.c?`<br><span class="cond">${it.c}</span>`:"";
-    b+=`<tr><td align="center">${i+1}</td><td><strong>${it.e}</strong><br><span class="bk">${it.t}</span>${co}</td><td class="${cc}">${it.n}</td><td class="t">${it.a}</td><td><span class="bg ${it.b}">${it.q}</span></td><td class="x">${it.l}</td><td class="sc"><a href="${it.u}" target="_blank" rel="noopener">${it.f}</a></td><td class="x upd">${it.d}</td></tr>`;
-  });
-  return`<table>${h}${b}</tbody></table>`;
-}
-
-// ─── FETCHER ───
-async function jf(url){
-  try{const r=await fetch(url,{headers:{"User-Agent":"Mozilla/5.0"},mode:"cors",cache:"no-store"});
-    return r.ok?await r.json():null}catch(e){console.warn(url,e);return null}}
-
-// ─── DATA LOADERS ───
-async function loadCuentas(){
-  const d=await jf(API+"/finanzas/fci/otros/ultimo");
-  if(!d?.length)return null;
-  const out=[];
-  for(const i of d){
-    const m=CM[(i.fondo||"").toUpperCase()];if(!m)continue;
-    const tna=(i.tna||0)*100;if(tna<=0.05)continue;
-    if(dAgo(i.fecha)>7)continue;
-    const tea=i.tea?i.tea*100:null;
-    const c=(i.condicionesCorto||"").substring(0,80);
-    out.push(mk(m[0],m[1],tna,tea,m[2],"Inmediata","Argentinadatos",API+"/finanzas/fci/otros/ultimo",fmtD(i.fecha),c));
-  }
-  out.sort((a,b)=>((b.n?parseFloat(b.n):0)||0)-((a.n?parseFloat(a.n):0)||0));
-  return out.slice(0,15);
-}
-
-async function loadPF(){
-  const d=await jf(API+"/finanzas/tasas/plazoFijo");
-  if(!d?.length)return null;
-  const out=[];
-  for(const b of d){
-    const t=b.tnaClientes;if(!t||t<0.1)continue;
-    const tea=((1+t/12)**12-1)*100;
-    const li=b.plazo||30;
-    out.push(mk(b.entidad,"Plazo Fijo "+li+"d",t*100,tea,"—",li+"d","Argentinadatos",API+"/finanzas/tasas/plazoFijo",fmtD(b.fecha),""));
-  }
-  out.sort((a,b)=>((b.n?parseFloat(b.n):0)||0)-((a.n?parseFloat(a.n):0)||0));
-  return out.slice(0,20);
-}
-
-async function loadPFUva(){
-  const d=await jf(API+"/finanzas/tasas/plazoFijoUvaPagoPeriodico");
-  if(!d?.length)return null;
-  const out=[];
-  for(const b of d){
-    const ent=(b.entidad||"").replace("Banco ","").replace("de la ","").substring(0,30);
-    for(const t of(b.tasas||[])){
+function s(id,b){document.querySelectorAll('.tc').forEach(e=>e.classList.remove('on'));document.querySelectorAll('.tb').forEach(e=>e.classList.remove('on'));document.getElementById(id).classList.add('on');b.classList.add('on');}
+</script>
+</body>
+</html>
